@@ -1,4 +1,4 @@
-# R vs Python user communities compared on Twitter
+# R vs Python users' Twitter communities compared
 1. Centrality measure of selected user accounts
 2. Community detection and visualization
 
