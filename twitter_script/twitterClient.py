@@ -1,7 +1,5 @@
-#
-# COSC2671 Social Media and Network Analytics
-# @author Jeffrey Chan, 2018
-#
+# @author a small world, 2018
+# @description Modified on Jeffrey Chan's script, this returns a tweepy.API object with sleep mechanism
 
 import sys
 import tweepy as tw
@@ -16,18 +14,19 @@ def twitterAuth():
     """
 
     try:
-        consumerKey = "FiQGX4cezbJN7d6tE1XuF4rme"
-        consumerSecret = "iAmLbjZYhcM954wNk3JTHRMTLlS3lXLb77YBbBV3HJpm0zc6Dk"
-        accessToken = "970972667191808000-olbiKs8cRk7NOxjtT80wWoXduzXXp01"
-        accessSecret = "wzErAPS2hCSziydCJjimcaGJHUBBuJOhg9CPwNQMGGSuW"
+        consumerKey = ""
+        consumerSecret = ""
+        accessToken = ""
+        accessSecret = ""
     except KeyError:
-        sys.stderr.write("Key or secret token are invalid.\n")
-        sys.exit(1)
+        sys.stderr.write("Key or secret token are invalid.\n") # standard output, input, and errors
+        sys.exit(1)                                            # exit codes
 
     auth = tw.OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessSecret)
 
     return auth
+
 
 
 
@@ -39,6 +38,6 @@ def twitterClient():
     """
 
     auth = twitterAuth()
-    client = tw.API(auth)
+    client = tw.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True, compression=True)
 
     return client

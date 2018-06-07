@@ -6,24 +6,38 @@ import random
 import twitterGetNetwork
 import twitterClient
 
-# Read the graph file
-G = nx.read_graphml('R_Programming_tweets.graphml')
+# set a random seed
+random.seed(9001)
 
-# specify egocentric user
-userName1 = 'pydatasci'
+def getFollowerFollowers(userName, k1, k2):
 
-# Get the followers' name
-followers = [item[0] for item in G.nodes(data=True)]
-n = len(followers)
-k = 100
-k = min(k, n)
+	"""
+	# To get the followers' followers of an ego-centric
+	# @param username: ego-centric name
+	# @param k1: number of first-level followers
+	# @param k2: number of second-level followers
 
-print('{} has {} followers; we choose {} first-level followers randomly.'.format(userName1, n, k))
-print('For each first-level followers, we choose 50 or lower followers randomly.')
+	"""
+	try:
+		G = nx.read_graphml(userName+'_tweets.graphml')
 
-followers = random.sample(followers, 100)
-client = twitterClient.twitterClient()
 
-for item in followers:
-	print('Trying to scrap data from {}'.format(item))
-	twitterGetNetwork.scrap_network(item, client, 50)
+		# Get the followers' name
+		followers = [item[0] for item in G.nodes(data=True)]
+		n = len(followers)
+
+		print('{} has {} followers; we choose {} first-level followers randomly.'.format(userName, n, k1))
+		print('For each first-level followers, we choose {} or lower followers randomly.'.format(k2))
+
+		followers = random.sample(followers, k1)
+		client = twitterClient.twitterClient()
+
+		for item in followers:
+			print('Trying to scrap data from {}'.format(item))
+			twitterGetNetwork.scrap_network(item, client, k2)
+
+	except TypeError:
+		print("Failed to run this function on {}".format(userName))
+
+
+getFollowerFollowers('pycharm', 100, 50)

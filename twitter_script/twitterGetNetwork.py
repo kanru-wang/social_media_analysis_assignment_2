@@ -8,17 +8,20 @@ import tweepy as tw
 import networkx as nx
 import random
 
-"""
 
-Define a function to scrap followers and followees from an ego-centric twitter account. 
-This function has the following parameters:
-1. egoname = a string of the ego-centric account
-2. client = a tweepy.API object with sleep mechanism
-3. n = number of randomly selected followees and followers
-   if n = 0, it will return the full list of followees and followers
-
-"""
 def scrap_network(egoname, client, n):
+
+	"""
+
+	To scrap followers and followees from an ego-centric twitter account.
+	This function has the following parameters:
+
+	@param egoname: a string of the ego-centric account
+	@param client: a tweepy.API object with sleep mechanism
+	@param n: number of randomly selected followees and followers
+	       if n = 0, it will return the full list of followees and followers
+
+	"""
 
 	# Initialise a directed graph
 	G = nx.DiGraph()
